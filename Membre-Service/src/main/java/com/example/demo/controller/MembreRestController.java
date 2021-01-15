@@ -33,7 +33,10 @@ public class MembreRestController {
 	public List<Membre> findAllmembres()
 	{
 		return iMemberService.findAll();
+
 	}
+
+
 
 	@GetMapping(value = "/membres/{id}")
 	public Membre findoneMembre(@PathVariable Long id)

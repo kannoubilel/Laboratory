@@ -54,7 +54,7 @@ public class MembreServiceApplication implements CommandLineRunner {
 		
 		// créer deux instances de type membre un enseignant et une autre étudiant
 		//sauvegrader les 2 dans la base de données
-		EnseignantChercheur ens1= new EnseignantChercheur("01752354", "Jmaiel", "Mohamed", new Date(), "", "jmaiel@enis.tn", "0000", "ENIS", "Professeur");
+		/*EnseignantChercheur ens1= new EnseignantChercheur("01752354", "Jmaiel", "Mohamed", new Date(), "", "jmaiel@enis.tn", "0000", "ENIS", "Professeur");
 		memberRepository.save(ens1);
 		
 		Membre ens2= new EnseignantChercheur("01752354", "mariam", "lahami", new Date(), "",  "lahami@enis.tn", "2222", "ENIS", "MA");
@@ -135,7 +135,7 @@ public class MembreServiceApplication implements CommandLineRunner {
 				});
 				iMemberService.affectermembreToOutil(1L,1L);
 				iMemberService.affectermembreToOutil(1L,2L);
-				iMemberService.affectermembreToOutil(2L,1L);
+				iMemberService.affectermembreToOutil(2L,1L);*/
 	}
 
 }
