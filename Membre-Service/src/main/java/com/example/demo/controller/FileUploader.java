@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,10 +15,16 @@ import java.util.List;
 @RestController
 public class FileUploader {
     List<String> files = new ArrayList<String>();
-    private final Path rootLocation = Paths.get("_Path_To_Save_The_File");
+    private final Path rootLocation = Paths.get("uploads");
+
 
     @PostMapping("/savefile")
     public ResponseEntity<String> handleFileUpload(@RequestBody MultipartFile file) {
+        try {
+            Files.createDirectory(rootLocation);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not initialize folder for upload!");
+        }
         String message;
         try {
             try {
