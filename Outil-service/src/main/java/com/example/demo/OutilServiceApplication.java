@@ -29,16 +29,16 @@ public class OutilServiceApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         configuration.exposeIdsFor(Outil.class);
-        SimpleDateFormat dateFormatter=new SimpleDateFormat("yyyy-MM-dd");
-        Date date1=dateFormatter.parse("2020-11-09");
-        Date date2=dateFormatter.parse("2020-10-09");
-        Date date3=dateFormatter.parse("2020-09-09");
-
-        Outil outil1=new Outil(date1,"source1");
-        outilRepository.save(outil1);
-        Outil outil2=new Outil(date2,"source2");
-        outilRepository.save(outil2);
-        Outil outil3=new Outil(date3,"source3");
-        outilRepository.save(outil3);
+//        SimpleDateFormat dateFormatter=new SimpleDateFormat("yyyy-MM-dd");
+//        Date date1=dateFormatter.parse("2020-11-09");
+//        Date date2=dateFormatter.parse("2020-10-09");
+//        Date date3=dateFormatter.parse("2020-09-09");
+//
+//        Outil outil1=new Outil(date1,"source1");
+//        outilRepository.save(outil1);
+//        Outil outil2=new Outil(date2,"source2");
+//        outilRepository.save(outil2);
+//        Outil outil3=new Outil(date3,"source3");
+//        outilRepository.save(outil3);
     }
 }

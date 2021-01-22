@@ -1,5 +1,6 @@
 package com.example.demo.entities;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -7,6 +8,7 @@ import java.util.Date;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +16,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -65,5 +68,8 @@ public  abstract class Membre implements Serializable {
 	Collection<EvenementBean> events;
 	@Transient
 	Collection<OutilBean>outils;
+	
+	@OneToMany(fetch = FetchType.EAGER)
+	Collection<Role> roles;
 	
 }

@@ -19,7 +19,7 @@ import com.example.demo.proxies.PublicationProxy;
 import com.example.demo.service.IMemberService;
 
 
-@CrossOrigin("*")
+
 @RestController
 public class MembreRestController {
 	@Autowired
@@ -35,6 +35,19 @@ public class MembreRestController {
 		return iMemberService.findAll();
 
 	}
+	
+	@GetMapping(value = "/membres/etudiants")
+	public List<Etudiant> findAllEtudiants()
+	{
+		return iMemberService.findAllEtudiants();
+
+	}
+	@GetMapping(value = "/membres/enseignants")
+	public List<EnseignantChercheur> findAllEnseignants()
+	{
+		return iMemberService.findAllEnseignants();
+
+	}
 
 
 
@@ -42,6 +55,10 @@ public class MembreRestController {
 	public Membre findoneMembre(@PathVariable Long id)
 	{
 		return iMemberService.findMember(id);
+	}
+	@GetMapping(value = "/membres/authentification/{email}")
+	public Membre findMembreByEmail(@PathVariable String email) {
+		return iMemberService.findByEmail(email);
 	}
 	
 	@PostMapping(value = "/membres/etudiant")
@@ -74,16 +91,20 @@ public class MembreRestController {
 		
 	       return iMemberService.affecterencadrantToetudiant(idetd, idens);
 	}
+	@DeleteMapping(value = "/membres/{id}")
+	public void deleteMember(@PathVariable  Long id){
+		iMemberService.deleteMember(id);
+	}
 	@GetMapping("/publications")
-	public CollectionModel<PublicationBean>listerpublication()
+	public Collection<PublicationBean>listerpublication()
 	{
-		return publicationproxy.listeDesPublications();
+		return publicationproxy.listeDesPublications().getContent();
 		
 	}
 	@GetMapping("/publications/{id}")
-	public EntityModel<PublicationBean> listerunepublication(@PathVariable Long id)
+	public PublicationBean listerunepublication(@PathVariable Long id)
 	{
-		return publicationproxy.recupererUnePublication(id);
+		return publicationproxy.recupererUnePublication(id).getContent();
 		
 	}
 	@GetMapping("/publications/auteur/{id}")
