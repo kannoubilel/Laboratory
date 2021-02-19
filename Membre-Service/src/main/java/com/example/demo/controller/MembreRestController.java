@@ -10,6 +10,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.EvenementBean;
+import com.example.demo.OutilBean;
 import com.example.demo.PublicationBean;
 import com.example.demo.entities.EnseignantChercheur;
 import com.example.demo.entities.Etudiant;
@@ -85,8 +86,8 @@ public class MembreRestController {
 		p.setId(id);
 	       return iMemberService.updateMember(p);
 	}
-	@PutMapping(value="/membres/etudiant")
-	public Membre affecter(@RequestParam Long idetd , @RequestParam Long idens )
+	@GetMapping(value="/membres/affecteretudiant/{idetd}/{idens}")
+	public Membre affecter(@PathVariable Long idetd , @PathVariable Long idens )
 	{
 		
 	       return iMemberService.affecterencadrantToetudiant(idetd, idens);
@@ -113,7 +114,6 @@ public class MembreRestController {
 		return iMemberService.findPublicationparauteur(idaut);		
 	}
 	
-
 	
 	@GetMapping("/evenements")
 	public CollectionModel<EvenementBean>listerevenement()
@@ -132,6 +132,10 @@ public class MembreRestController {
 	{
 		return iMemberService.findEvenementparmembre(id);
 	}
+	@GetMapping("/outils/membre/{id}")
+	public List<OutilBean> listerOutilsByMembre(@PathVariable Long id){
+		return iMemberService.findOutilparmembre(id);
+	}
 	
 	@GetMapping("/fullmember/{id}")
 	public Membre findAFullMember(@PathVariable(name="id") Long id)
@@ -141,6 +145,19 @@ public class MembreRestController {
 		mbr.setEvents(iMemberService.findEvenementparmembre(id));
 		mbr.setOutils(iMemberService.findOutilparmembre(id));
 		return mbr;		
+	}
+	@GetMapping("membre/affecterpub/{idMembre}/{idPub}")
+	public void affecterMembrePublication(@PathVariable Long idMembre,@PathVariable Long idPub) {
+		iMemberService.affecterauteurTopublication(idMembre, idPub);
+	}
+	@GetMapping("membre/affecterevent/{idMembre}/{idEvent}")
+	public void affecterMembreEvent(@PathVariable Long idMembre,@PathVariable Long idEvent) {
+		iMemberService.affectermembreToevenement(idMembre, idEvent);
+	}
+	@GetMapping("membre/affecteroutil/{idMembre}/{idOutil}")
+	public void affecterMembreOutil(@PathVariable Long idMembre,@PathVariable Long idOutil) {
+		iMemberService.affectermembreToOutil(idMembre, idOutil);
+		
 	}
 	
 }

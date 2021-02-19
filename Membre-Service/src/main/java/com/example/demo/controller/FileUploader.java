@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin("*")
+
 @RestController
 public class FileUploader {
     /*List<String> files = new ArrayList<String>();

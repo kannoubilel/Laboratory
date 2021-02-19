@@ -53,6 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		 * .rolePrefix("ROLE_").passwordEncoder(getBCPE());
 		 */
     auth.userDetailsService(userDetailsService).passwordEncoder(getBCPE());
+   
 	}
 
 	@Override
@@ -65,6 +66,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.authorizeRequests().antMatchers("/login/**").permitAll();
+		http.authorizeRequests().antMatchers("/membre-service/files/**").permitAll();
+
 		//http.authorizeRequests().antMatchers(HttpMethod.POST,"/tasks/**").hasAuthority("ADMIN");
 		http.authorizeRequests().anyRequest().authenticated();
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager()));
