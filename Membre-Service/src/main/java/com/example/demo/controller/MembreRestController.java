@@ -10,6 +10,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.EvenementBean;
+import com.example.demo.OutilBean;
 import com.example.demo.PublicationBean;
 import com.example.demo.entities.EnseignantChercheur;
 import com.example.demo.entities.Etudiant;
@@ -19,7 +20,7 @@ import com.example.demo.proxies.PublicationProxy;
 import com.example.demo.service.IMemberService;
 
 
-@CrossOrigin("*")
+
 @RestController
 public class MembreRestController {
 	@Autowired
@@ -33,12 +34,32 @@ public class MembreRestController {
 	public List<Membre> findAllmembres()
 	{
 		return iMemberService.findAll();
+
 	}
+	
+	@GetMapping(value = "/membres/etudiants")
+	public List<Etudiant> findAllEtudiants()
+	{
+		return iMemberService.findAllEtudiants();
+
+	}
+	@GetMapping(value = "/membres/enseignants")
+	public List<EnseignantChercheur> findAllEnseignants()
+	{
+		return iMemberService.findAllEnseignants();
+
+	}
+
+
 
 	@GetMapping(value = "/membres/{id}")
 	public Membre findoneMembre(@PathVariable Long id)
 	{
 		return iMemberService.findMember(id);
+	}
+	@GetMapping(value = "/membres/authentification/{email}")
+	public Membre findMembreByEmail(@PathVariable String email) {
+		return iMemberService.findByEmail(email);
 	}
 	
 	@PostMapping(value = "/membres/etudiant")
@@ -65,22 +86,26 @@ public class MembreRestController {
 		p.setId(id);
 	       return iMemberService.updateMember(p);
 	}
-	@PutMapping(value="/membres/etudiant")
-	public Membre affecter(@RequestParam Long idetd , @RequestParam Long idens )
+	@GetMapping(value="/membres/affecteretudiant/{idetd}/{idens}")
+	public Membre affecter(@PathVariable Long idetd , @PathVariable Long idens )
 	{
 		
 	       return iMemberService.affecterencadrantToetudiant(idetd, idens);
 	}
+	@DeleteMapping(value = "/membres/{id}")
+	public void deleteMember(@PathVariable  Long id){
+		iMemberService.deleteMember(id);
+	}
 	@GetMapping("/publications")
-	public CollectionModel<PublicationBean>listerpublication()
+	public Collection<PublicationBean>listerpublication()
 	{
-		return publicationproxy.listeDesPublications();
+		return publicationproxy.listeDesPublications().getContent();
 		
 	}
 	@GetMapping("/publications/{id}")
-	public EntityModel<PublicationBean> listerunepublication(@PathVariable Long id)
+	public PublicationBean listerunepublication(@PathVariable Long id)
 	{
-		return publicationproxy.recupererUnePublication(id);
+		return publicationproxy.recupererUnePublication(id).getContent();
 		
 	}
 	@GetMapping("/publications/auteur/{id}")
@@ -89,7 +114,6 @@ public class MembreRestController {
 		return iMemberService.findPublicationparauteur(idaut);		
 	}
 	
-
 	
 	@GetMapping("/evenements")
 	public CollectionModel<EvenementBean>listerevenement()
@@ -108,6 +132,10 @@ public class MembreRestController {
 	{
 		return iMemberService.findEvenementparmembre(id);
 	}
+	@GetMapping("/outils/membre/{id}")
+	public List<OutilBean> listerOutilsByMembre(@PathVariable Long id){
+		return iMemberService.findOutilparmembre(id);
+	}
 	
 	@GetMapping("/fullmember/{id}")
 	public Membre findAFullMember(@PathVariable(name="id") Long id)
@@ -117,6 +145,19 @@ public class MembreRestController {
 		mbr.setEvents(iMemberService.findEvenementparmembre(id));
 		mbr.setOutils(iMemberService.findOutilparmembre(id));
 		return mbr;		
+	}
+	@GetMapping("membre/affecterpub/{idMembre}/{idPub}")
+	public void affecterMembrePublication(@PathVariable Long idMembre,@PathVariable Long idPub) {
+		iMemberService.affecterauteurTopublication(idMembre, idPub);
+	}
+	@GetMapping("membre/affecterevent/{idMembre}/{idEvent}")
+	public void affecterMembreEvent(@PathVariable Long idMembre,@PathVariable Long idEvent) {
+		iMemberService.affectermembreToevenement(idMembre, idEvent);
+	}
+	@GetMapping("membre/affecteroutil/{idMembre}/{idOutil}")
+	public void affecterMembreOutil(@PathVariable Long idMembre,@PathVariable Long idOutil) {
+		iMemberService.affectermembreToOutil(idMembre, idOutil);
+		
 	}
 	
 }

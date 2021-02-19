@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.example.demo.proxies.OutilProxy;
+import com.example.demo.service.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -24,6 +25,8 @@ import com.example.demo.proxies.EvenementProxy;
 import com.example.demo.proxies.PublicationProxy;
 import com.example.demo.service.IMemberService;
 
+import javax.annotation.Resource;
+
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
@@ -41,7 +44,8 @@ public class MembreServiceApplication implements CommandLineRunner {
 	EvenementProxy evenementProxy;
 	@Autowired
 	OutilProxy outilProxy;
-	
+	@Resource
+	FileStorageService storageService;
 	
 
 	public static void main(String[] args) {
@@ -50,11 +54,12 @@ public class MembreServiceApplication implements CommandLineRunner {
 
 
 	public void run(String... args) throws Exception {
-		// TODO Auto-generated method stub
+		storageService.deleteAll();
+		storageService.init();
 		
 		// créer deux instances de type membre un enseignant et une autre étudiant
 		//sauvegrader les 2 dans la base de données
-		EnseignantChercheur ens1= new EnseignantChercheur("01752354", "Jmaiel", "Mohamed", new Date(), "", "jmaiel@enis.tn", "0000", "ENIS", "Professeur");
+		/*EnseignantChercheur ens1= new EnseignantChercheur("01752354", "Jmaiel", "Mohamed", new Date(), "", "jmaiel@enis.tn", "0000", "ENIS", "Professeur");
 		memberRepository.save(ens1);
 		
 		Membre ens2= new EnseignantChercheur("01752354", "mariam", "lahami", new Date(), "",  "lahami@enis.tn", "2222", "ENIS", "MA");
@@ -73,7 +78,7 @@ public class MembreServiceApplication implements CommandLineRunner {
 		memberRepository.save(etd1);
 		memberRepository.save(etd2);
 		memberRepository.save(etd3);
-		memberRepository.save(etd4);
+		memberRepository.save(etd4);*/
 		
 		
 		// affecter un étudiant à un enseigant
@@ -82,8 +87,8 @@ public class MembreServiceApplication implements CommandLineRunner {
 		iMemberService.affecterencadrantToetudiant(3L, 1L);
 		
 		// find etudiants encadré par 1
-		List<Etudiant> etds=etudiantRepository.findByEncadrant(ens1);
-		System.out.print(etds.size());
+		//List<Etudiant> etds=etudiantRepository.findByEncadrant(ens1);
+		//System.out.print(etds.size());
 		
 		//affecter une publication à un auteur
 		

@@ -25,13 +25,13 @@ public class EvenementMembreApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		configuration.exposeIdsFor(Evenement.class);
 		
-		Evenement event1= new Evenement("hackathon", new Date(), "Sfax");
+		/*Evenement event1= new Evenement("hackathon", new Date(), "Sfax");
 		Evenement event2= new Evenement("conference", new Date(), "France");
 		Evenement event3= new Evenement("formation", new Date(), "Tunis");
 		
 		evenementRepository.save(event1);
 		evenementRepository.save(event2);
-		evenementRepository.save(event3);
+		evenementRepository.save(event3);*/
 }}
 
 
